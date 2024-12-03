@@ -1,6 +1,7 @@
-/** @file flow-over-heated-plate.cpp
+/** @file solid-gismo-elasticity.cpp
 
-    @brief Heat equation participant for the PreCICE example "flow over heated plate"
+    @brief Elasticity participant for the PreCICE example "perpendicular-flap".
+
 
     This file is part of the G+Smo library.
 
@@ -8,7 +9,7 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-    Author(s): H.M. Verhelst
+    Author(s): J.Li (2023 - ..., TU Delft), H.M. Verhelst (2019 - 2024, TU Delft)
 */
 
 #include <gismo.h>
@@ -90,7 +91,7 @@ int main(int argc, char *argv[])
     std::string participantName = "Solid";
     gsPreCICE<real_t> participant(participantName, precice_config);
 
-/*
+    /*
      * Data initialization
      *
      * This participant manages the geometry. The follow meshes and data are made available:
@@ -104,6 +105,7 @@ int main(int argc, char *argv[])
      *   + ControlPointData:    This data is defined on the ControlPointMesh and stores the displacement of the control points
      *   + ForceData:           This data is defined on the ForceMesh and stores pressure/forces
      */
+
     std::string SolidMesh        = "Solid-Mesh";
     std::string StressData       = "Stress";
     std::string DisplacementData = "Displacement";
@@ -112,10 +114,10 @@ int main(int argc, char *argv[])
     gsOptionList quadOptions = gsExprAssembler<>::defaultOptions();
 
     // Get the quadrature points
-    gsMatrix<> uv = gsQuadrature::getAllNodes(bases.basis(0),quadOptions,couplingInterfaces);
-    gsMatrix<> xy = patches.patch(0).eval(uv);
-    gsVector<index_t> xyIDs; // needed for writing
-    participant.addMesh(SolidMesh,xy,xyIDs);
+    gsMatrix<> quad_uv = gsQuadrature::getAllNodes(bases.basis(0),quadOptions,couplingInterfaces); // Quadrature points in the parametric domain
+    gsMatrix<> quad_xy = patches.patch(0).eval(quad_uv); // Quadrature points in the physical domain
+    gsVector<index_t> quad_xyIDs; // needed for writing
+    participant.addMesh(SolidMesh,quad_xy,quad_xyIDs);
 
     // Define precice interface
     real_t precice_dt = participant.initialize();
@@ -233,13 +235,12 @@ int main(int argc, char *argv[])
 
     real_t time = 0;
 
-    // Plot initial solution
+    // Plot initial solution 
     if (plot)
     {
         gsMultiPatch<> solution;
         assembler.constructSolution(solVector,fixedDofs,solution);
 
-        // solution.patch(0).coefs() -= patches.patch(0).coefs();// assuming 1 patch here
         gsField<> solField(patches,solution);
         std::string fileName = "./output/solution" + util::to_string(timestep);
         gsWriteParaview<>(solField, fileName, 500);
@@ -286,24 +287,13 @@ int main(int argc, char *argv[])
         // potentially adjust non-matching timestep sizes
         dt = std::min(dt,precice_dt);
 
-        // gsMultiPatch<> solution;
-        // assembler.constructSolution(solVector,fixedDofs,solution);
-        // // write heat fluxes to interface
-        // gsMatrix<> result(patches.geoDim(),uv.cols());
-        // for (index_t k=0; k!=uv.cols(); k++)
-        // {
-        //     // gsDebugVar(ev.eval(nv(G),uv.col(k)));
-        //     result.col(k) = solution.patch(0).eval(uv.col(k));
-        // }
-        // participant.writeBlockVectorData(meshID,dispID,xy,result);
-
 
         gsMultiPatch<> solution;
         assembler.constructSolution(solVector,fixedDofs,solution);
         // write heat fluxes to interface
-        gsMatrix<> result(patches.geoDim(),uv.cols());
-        solution.patch(0).eval_into(uv,result);
-        participant.writeData(SolidMesh,DisplacementData,xyIDs,result);
+        gsMatrix<> result(patches.geoDim(),quad_uv.cols());
+        solution.patch(0).eval_into(quad_uv,result);
+        participant.writeData(SolidMesh,DisplacementData,quad_xyIDs,result);
 
         // do the coupling
         precice_dt =participant.advance(dt);
@@ -323,7 +313,7 @@ int main(int argc, char *argv[])
             timestep++;
 
             gsField<> solField(patches,solution);
-            if (timestep % plotmod==0 && plot)
+            if (timestep % plotmod==0 && plot) // Generate Paraview output for visualization
             {
                 // solution.patch(0).coefs() -= patches.patch(0).coefs();// assuming 1 patch here
                 std::string fileName = "./output/solution" + util::to_string(timestep);
