@@ -11,13 +11,13 @@
   <data:vector name="Displacement" />
 
   <mesh name="Fluid-Mesh" dimensions="2">
-    <use-data name="Force" />
+    <use-data name="Stress" />
     <use-data name="Displacement" />
   </mesh>
 
   <mesh name="Solid-Mesh" dimensions="2">
     <use-data name="Displacement" />
-    <use-data name="Force" />
+    <use-data name="Stress" />
   </mesh>
 
   <participant name="Fluid">
