@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e -u
 
 . ../../tools/log.sh
@@ -14,6 +14,10 @@ if [ ! -f PIDcontroller.fmu ]; then
   cp ./PIDcontroller.fmu ../..
   cd ../../
 fi
+
+python3 -m venv .venv
+. .venv/bin/activate
+pip install -r requirements.txt
 
 fmiprecice ./fmi-settings.json ./precice-settings.json
 

@@ -18,19 +18,20 @@ To get a feeling what preCICE does, watch a [short presentation](https://www.you
 
 ## Installation
 
-1. Get and install preCICE. For Ubuntu 22.04 (Jammy Jellyfish), this is pretty easy: [download](https://github.com/precice/precice/releases/latest) and install our binary package by clicking on it or using the following commands:
+1. Get and install preCICE. For Ubuntu 24.04 (Noble Numbat), this is pretty easy: [download](https://github.com/precice/precice/releases/latest) and install our binary package by clicking on it or using the following commands:
 
     ```bash
-    wget https://github.com/precice/precice/releases/download/v3.1.1/libprecice3_3.1.1_jammy.deb
-    sudo apt install ./libprecice3_3.1.1_jammy.deb
+    wget https://github.com/precice/precice/releases/download/v3.1.2/libprecice3_3.1.2_noble.deb
+    sudo apt install ./libprecice3_3.1.2_noble.deb
     ```
 
     | OS                            | Package |
     | ---                           | ---     |
-    | Ubuntu 20.04 Focal Fossa      | [`libprecice3_3.1.1_focal.deb`](https://github.com/precice/precice/releases/download/v3.1.1/libprecice3_3.1.1_focal.deb) |
-    | Ubuntu 22.04 Jammy Jellyfish  | [`libprecice3_3.1.1_jammy.deb`](https://github.com/precice/precice/releases/download/v3.1.1/libprecice3_3.1.1_jammy.deb) |
-    | Debian 11 "bullseye"          | [`libprecice3_3.1.1_bullseye.deb`](https://github.com/precice/precice/releases/download/v3.1.1/libprecice3_3.1.1_bullseye.deb) |
-    | Debian 12 "bookworm"          | [`libprecice3_3.1.1_bookworm.deb`](https://github.com/precice/precice/releases/download/v3.1.1/libprecice3_3.1.1_bookworm.deb) |
+    | Ubuntu 20.04 Focal Fossa      | [`libprecice3_3.1.2_focal.deb`](https://github.com/precice/precice/releases/download/v3.1.2/libprecice3_3.1.2_focal.deb) |
+    | Ubuntu 22.04 Jammy Jellyfish  | [`libprecice3_3.1.2_jammy.deb`](https://github.com/precice/precice/releases/download/v3.1.2/libprecice3_3.1.2_jammy.deb) |
+    | Ubuntu 24.04 Noble Numbat  | [`libprecice3_3.1.2_noble.deb`](https://github.com/precice/precice/releases/download/v3.1.2/libprecice3_3.1.2_noble.deb) |
+    | Debian 11 "bullseye"          | [`libprecice3_3.1.2_bullseye.deb`](https://github.com/precice/precice/releases/download/v3.1.2/libprecice3_3.1.2_bullseye.deb) |
+    | Debian 12 "bookworm"          | [`libprecice3_3.1.2_bookworm.deb`](https://github.com/precice/precice/releases/download/v3.1.2/libprecice3_3.1.2_bookworm.deb) |
     | Something else                | See an [overview of options](https://precice.org/installation-overview.html) |
 
     - Facing any problems? [Ask for help](https://precice.org/community-channels.html).
@@ -39,10 +40,10 @@ To get a feeling what preCICE does, watch a [short presentation](https://www.you
     ```bash
     # Add the signing key, add the repository, update (check this):
     wget -q -O - https://dl.openfoam.com/add-debian-repo.sh | sudo bash
-    # Install OpenFOAM v2312:
-    sudo apt install openfoam2312-dev
+    # Install OpenFOAM v2406:
+    sudo apt install openfoam2406-dev
     # Enable OpenFOAM by default in your system and apply now:
-    echo "source /usr/lib/openfoam/openfoam2312/etc/bashrc" >> ~/.bashrc
+    echo "source /usr/lib/openfoam/openfoam2406/etc/bashrc" >> ~/.bashrc
     source ~/.bashrc
     ```
 
@@ -55,9 +56,9 @@ To get a feeling what preCICE does, watch a [short presentation](https://www.you
 4. Download and install the [OpenFOAM-preCICE adapter](https://precice.org/adapter-openfoam-get.html):
 
     ```bash
-     wget https://github.com/precice/openfoam-adapter/archive/refs/tags/v1.3.0.tar.gz
-     tar -xzf v1.3.0.tar.gz 
-     cd openfoam-adapter-1.3.0/
+     wget https://github.com/precice/openfoam-adapter/archive/refs/tags/v1.3.1.tar.gz
+     tar -xzf v1.3.1.tar.gz 
+     cd openfoam-adapter-1.3.1/
      ./Allwmake
      cd ..
     ```
@@ -65,9 +66,9 @@ To get a feeling what preCICE does, watch a [short presentation](https://www.you
 5. Get the quickstart tutorial case:
 
     ```bash
-    wget https://github.com/precice/tutorials/releases/tag/v202404.0
+    wget https://github.com/precice/tutorials/archive/refs/tags/v202404.0.tar.gz
     tar -xzf v202404.0.tar.gz
-    cd tutorials/quickstart
+    cd tutorials-202404.0/quickstart
     ```
 
 If you prefer to easily try everything in an isolated environment, you may prefer using our [demo virtual machine](https://precice.org/installation-vm.html).

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 error() {
     echo "Error: $1" >&2
@@ -185,4 +185,14 @@ clean_fmi() {
         clean_precice_logs .
         clean_case_logs .
     )
+}
+
+clean_matlab(){
+    (
+	set -e -u
+	cd "$1"
+	echo "- Cleaning up MATLAB case in $(pwd)"
+	clean_precice_logs .
+	clean_case_logs .
+    )	
 }

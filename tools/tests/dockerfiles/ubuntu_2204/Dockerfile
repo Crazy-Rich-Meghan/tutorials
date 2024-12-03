@@ -48,13 +48,14 @@ RUN python3 -m pip install --user --upgrade pip
 FROM precice_dependecies as precice
 # Install & build precice into /home/precice/precice
 ARG PRECICE_REF
+ARG PRECICE_PRESET
 USER precice
 WORKDIR /home/precice
 RUN git clone https://github.com/precice/precice.git precice && \
     cd precice && \
     git checkout ${PRECICE_REF} && \
     mkdir build && cd build &&\
-    cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/home/precice/.local/ -DPRECICE_PETScMapping=OFF -DBUILD_TESTING=OFF && \
+    cmake .. --preset=${PRECICE_PRESET} -DCMAKE_INSTALL_PREFIX=/home/precice/.local/ -DPRECICE_PETScMapping=OFF -DBUILD_TESTING=OFF && \
     make all install -j $(nproc)
 
 FROM precice_dependecies as openfoam_adapter
@@ -93,7 +94,6 @@ RUN add-apt-repository -y ppa:fenics-packages/fenics && \
     apt-get -qq update && \
     apt-get -qq install --no-install-recommends fenics
 USER precice
-RUN pip3 install --user fenics-ufl
 ARG FENICS_ADAPTER_REF
 # Building fenics-adapter
 RUN pip3 install --user git+https://github.com/precice/fenics-adapter.git@${FENICS_ADAPTER_REF}
@@ -111,20 +111,20 @@ COPY --from=precice /home/precice/.local /home/precice/.local
 USER root
 RUN apt-get -qq update && \
     apt-get -qq install libarpack2-dev libspooles-dev libyaml-cpp-dev
-ARG CALULIX_VERSION
+ARG CALCULIX_VERSION
 USER precice
 #Download Calculix
 WORKDIR /home/precice
-RUN wget http://www.dhondt.de/ccx_${CALULIX_VERSION}.src.tar.bz2 && \
-    tar xvjf ccx_${CALULIX_VERSION}.src.tar.bz2 && \
-    rm -fv ccx_${CALULIX_VERSION}.src.tar.bz2
+RUN wget http://www.dhondt.de/ccx_${CALCULIX_VERSION}.src.tar.bz2 && \
+    tar xvjf ccx_${CALCULIX_VERSION}.src.tar.bz2 && \
+    rm -fv ccx_${CALCULIX_VERSION}.src.tar.bz2
 
-ARG CALULIX_ADAPTER_REF
+ARG CALCULIX_ADAPTER_REF
 WORKDIR /home/precice
 RUN git clone https://github.com/precice/calculix-adapter.git && \
     cd calculix-adapter && \
-    git checkout ${CALULIX_ADAPTER_REF} &&\
-    make CXX_VERSION=${CALULIX_VERSION} ADDITIONAL_FFLAGS="-fallow-argument-mismatch" -j $(nproc) && \
+    git checkout ${CALCULIX_ADAPTER_REF} &&\
+    make CXX_VERSION=${CALCULIX_VERSION} ADDITIONAL_FFLAGS="-fallow-argument-mismatch" -j $(nproc) && \
     ln -s /home/precice/calculix-adapter/bin/ccx_preCICE /home/precice/.local/bin/ccx_preCICE
 
 FROM python_bindings as su2_adapter
