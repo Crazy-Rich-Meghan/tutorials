@@ -9,6 +9,9 @@ summary: This tutorial demonstrates the isogeometric analysis (IGA) solid solver
 
 This example demostrates how the Geometry + Simulation Modules (G+Smo) can be utilised through a module-type adapter to couple with other codes using preCICE. G+Smo offers a robust framework for isogeometric analysis (IGA), seamlessly integrating geometric representations with numerical solvers to enable advanced simulations and efficient code coupling.
 
+## Setup
+This tutorial uses the same setup as the **original** perpendicular flap example, with the key difference being the switch in the communicated information to stress. 
+
 ## Requirements
 
 To run the tutorial you need to install the following components:
