@@ -1,7 +1,7 @@
 ---
 title: Partitioned heat conduction
 permalink: tutorials-partitioned-heat-conduction.html
-keywords: FEniCS, Nutils, Heat conduction
+keywords: FEniCS, Nutils, G+Smo, Heat conduction
 summary: We solve a simple heat equation. The domain is partitioned and the coupling is established in a Dirichlet-Neumann fashion.
 ---
 
@@ -36,6 +36,8 @@ You can either couple a solver with itself or different solvers with each other.
 * Nutils. Install [Nutils](https://nutils.org/install-nutils.html).
 
 * OpenFOAM. This case uses the custom [heatTransfer](https://github.com/precice/tutorials/blob/master/partitioned-heat-conduction/solver-openfoam/heatTransfer.C) solver (find it in `solver-openfoam` and build with `wmake`). Read more details in the [OpenFOAM adapter](https://precice.org/adapter-openfoam-overview.html).
+
+* G+Smo. Inatsll [G+Smo](https://github.com/gismo/gismo).
 
 ## Running the simulation
 
@@ -73,6 +75,38 @@ If you want to use Nutils or OpenFOAM, use `cd dirichlet/neumann-nutils`, respec
 mpirun -n <N_PROC> heat.py -d
 ```
 
+The G+Smo-based version of the tutorial offers IsoGeometric Analysis discretization method. To run the example you need to follow the following steps:
+
+    - Download G+Smo and Create a Build Folder
+    ```
+    git clone git@github.com:gismo/gismo.git
+    cd gismo
+    mkdir build
+    ```
+    - Configure G+Smo 
+    ```
+    cmake .. -DGISMO_OPTIONAL="<other submodules>;gsPreCICE"
+    ```
+    - Build the Example
+    ```
+    make partitioned-heat-conduction -j <number of threads to use>
+    ```
+    - Link the compiled executable to the gismo-executable folder within the tutorial directory
+    ```
+    cd <Your preCICE tutorial folder>/partitioned-heat-conduction/gismo-executable
+    ln -sf <You G+Smo build folder>/bin/partitioned-heat-conduction ./gismo_executable`
+    ```
+    - Open two terminals and run
+    ```
+    cd dirichlet-gismo
+    ./run.sh
+    ```
+
+    ```
+    cd neumann-gismo
+    ./run.sh
+    ```
+
 ### Note on the combination of Nutils & FEniCS
 
 You can mix the Nutils and FEniCS solver, if you like. Note that the error for a pure FEniCS simulation is lower than for a mixed one. We did not yet study the origin of this error, but assume that this is due to the fact that Nutils uses Gauss points as coupling mesh and therefore entails extrapolation in the data mapping at the top and bottom corners.
@@ -84,6 +118,8 @@ Output is written into the folders `fenics/out` and `nutils`.
 For FEniCS you can visualize the content with paraview by opening the `*.pvd` files. The files `Dirichlet.pvd` and `Neumann.pvd` correspond to the numerical solution of the Dirichlet, respectively Neumann, problem, while the files with the prefix `ref` correspond to the analytical reference solution, the files with `error` show the error and the files with `ranks` the ranks of the solvers (if executed in parallel).
 
 For Nutils, please use the files `Dirichlet-*.vtk` or `Neumann-*.vtk`. Please note that these files contain the temperature as well as the reference solution.
+
+For G+Smo, please use the file `solution.pvd` in both dirichlet-gismo and neumann-gismo directories. 
 
 ![Animation of the partitioned heat equation](images/tutorials-partitioned-heat-conduction-FEniCS-movie.gif)
 
