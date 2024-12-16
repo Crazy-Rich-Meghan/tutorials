@@ -1,16 +1,14 @@
 ---
 title: Perpendicular Flap (with IGA Solid Participant Communicating Stress Data)
-keywords: G+Smo, perpendicular flap
-summary: This tutorial demonstrates the isogeometric analysis (IGA) solid solver version of the “Perpendicular Flap” tutorial. It focuses on using G+Smo to handle solid-structure interactions by exchanging stress data during simulations.
+keywords: G+Smo, fluid-structure interaction, FSI, OpenFOAM, IGA  
+summary: This tutorial is a modified version of the “perpendicular flap” tutorial using stresses instead of forces.  
+
 ---
 
 
 ## Overview
 
-This example demostrates how the Geometry + Simulation Modules (G+Smo) can be utilised through a module-type adapter to couple with other codes using preCICE. G+Smo offers a robust framework for isogeometric analysis (IGA), seamlessly integrating geometric representations with numerical solvers to enable advanced simulations and efficient code coupling.
-
-## Setup
-This tutorial uses the same setup as the **original** perpendicular flap example, with the key difference being the switch in the communicated information to stress. 
+This case builds upon the [partitioned heat conduction](https://precice.org/tutorials-partitioned-heat-conduction.html) tutorial with several key modifications: adding IGA-based structure solver G+Smo and exchanging stress data instead of force data.
 
 ## Requirements
 
@@ -40,27 +38,19 @@ This will trigger a download of `gsPreCICE` from GitHub. Once `gsPreCICE` is dow
 
 ```
 make solid-gismo-elasticity -j<number of threads to use>
+make install solid-gismo-elasticity 
 ```
 
-### Linking the Executable to the preCICE Tutorial Folder
 
+### Runnning the G+Smo Tutorial 
 
-1. Navigate to the directory of the preCICE tutorial (solid-gismo-elasticity).
-```
-cd <path to your precice tutorials directory>/perpendicular-flap-stress/solid-gismo-elasticity/
-```
-
-2. Create the symbolic link between the executable file and the preCICE tutorial folder
-```
-ln -sf <path to your G+Smo build folder>/bin/solid-gismo-elasticity ./solid-gismo-elasticity
-```
-
-### Runnning the G+Smo Tutorial
 Open two terminals and run:
+
 ```
 cd solid-gismo-elasticity
 ./run.sh
 ```
+
 and
 
 ```
