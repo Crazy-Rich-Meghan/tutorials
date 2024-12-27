@@ -1,5 +1,5 @@
 ---
-title: Perpendicular Flap (with IGA Solid Participant Communicating Stress Data)
+title: Perpendicular flap with stresses
 keywords: G+Smo, fluid-structure interaction, FSI, OpenFOAM, IGA  
 summary: This tutorial is a modified version of the “perpendicular flap” tutorial using stresses instead of forces.  
 
