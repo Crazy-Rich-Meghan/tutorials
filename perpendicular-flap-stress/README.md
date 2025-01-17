@@ -37,8 +37,8 @@ cmake .. -DGISMO_OPTIONAL="<other submodules>;gsPreCICE"
 This will trigger a download of `gsPreCICE` from GitHub. Once `gsPreCICE` is downloaded, you can compile G+Smo with `gsPreCICE`:
 
 ```
-make solid-gismo-elasticity -j<number of threads to use>
-make install solid-gismo-elasticity 
+make perpendicular-flap-vertex-gismo -j<number of threads to use>
+make install perpendicular-flap-vertex-gismo
 ```
 
 
