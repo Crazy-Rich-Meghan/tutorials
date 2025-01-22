@@ -1,66 +1,62 @@
 ---
 title: Perpendicular flap with stresses
-keywords: G+Smo, fluid-structure interaction, FSI, OpenFOAM, IGA  
-summary: This tutorial is a modified version of the “perpendicular flap” tutorial using stresses instead of forces.  
+keywords: G+Smo, fluid-structure interaction, FSI, OpenFOAM
+summary: This tutorial is a modified version of the “perpendicular flap” tutorial using stresses instead of forces.
 
 ---
 
+{% note %}
+Get the [case files of this tutorial](https://github.com/precice/tutorials/tree/master/perpendicular-flap-stresses). Read how in the [tutorials introduction](https://precice.org/tutorials.html).
+{% endnote %}
 
-## Overview
+## Setup
 
-This case builds upon the [partitioned heat conduction](https://precice.org/tutorials-partitioned-heat-conduction.html) tutorial with several key modifications: adding IGA-based structure solver G+Smo and exchanging stress data instead of force data.
+The scenario is exactly the same as the one described in the [perpendicular flap tutorial](https://precice.org/tutorials-perpendicular-flap.html). The only difference is that we use stresses instead of forces as data sent from the fluid to the solid participant. This requires changing the mapping constraint from conservative (forces) to consistent (stresses). To avoid a "write-consistent" combination, which [cannot be used in parallel](ttps://precice.org/configuration-mapping.html#restrictions-for-parallel-participants), we exchange both meshes.
 
-## Requirements
+## Configuration
 
-To run the tutorial you need to install the following components:
-- [preCICE](https://precice.org/quickstart.html)
-- [G+Smo and gsPreCICE](https://github.com/gismo/gismo)
+preCICE configuration (image generated using the [precice-config-visualizer](https://precice.org/tooling-config-visualization.html)):
 
-## Run the tutorial
+![preCICE configuration visualization](images/tutorials-perpendicular-flap-stress-precice-config.png)
 
-### G+Smo and preCICE adapter (`gsPreCICE`) Installation
-Since `gsPreCICE`is a submodule of G+Smo, you should download G+Smo first:
+## Available solvers
 
-```
-git clone https://github.com/gismo/gismo.git
-```
+Fluid participant:
 
-Then, configure G+Smo with `-DGISMO_OPTIONAL=";gsPreCICE"`:
+* OpenFOAM (pimpleFoam). In case you are using a very old OpenFOAM version, you will need to adjust the solver to `pimpleDyMFoam` in the `Fluid/system/controlDict` file. For more information, have a look at the [OpenFOAM adapter documentation](https://precice.org/adapter-openfoam-overview.html).
 
-```
-cd gismo
-mkdir build
-cd build
-cmake .. -DGISMO_OPTIONAL="<other submodules>;gsPreCICE"
-```
+Solid participant:
 
-This will trigger a download of `gsPreCICE` from GitHub. Once `gsPreCICE` is downloaded, you can compile G+Smo with `gsPreCICE`:
+* G+Smo. For more information, have a look at the [G+Smo adapter documentation](https://precice.org/adapter-gismo-overview.html).
 
-```
-make perpendicular-flap-vertex-gismo -j<number of threads to use>
-make install perpendicular-flap-vertex-gismo
-```
+## Running the Simulation
 
+Open two separate terminals and start the desired fluid and solid participant by calling the respective run script `run.sh` located in the participant directory. For example:
 
-### Runnning the G+Smo Tutorial 
-
-Open two terminals and run:
-
-```
-cd solid-gismo-elasticity
+```bash
+cd fluid-openfoam
 ./run.sh
 ```
 
 and
 
-```
-cd fluid-openfoam
+```bash
+cd solid-gismo
 ./run.sh
 ```
 
 ## Post-processing
-The results of this tutorial are comparable to the simulation results communicated with force under the perpendicular-flap tutorials.
-![G+Smo stress](images/tutorials-perpendicular-flap-displacement-openfoam-gismo-elasticity.png)
 
-Additionally, the mesh convergence study data is available under the `images/data` directory. A sample plot illustrating the convergence of x-displacement over time is shown below:
-![G+Smo converfence](images/x_displacement_vs_time.png)
+On the OpenFOAM side, you can open the `.foam` file with ParaView, or create VTK files with `foamToVTK`.
+
+TODO: how can we visualize G+Smo results?
+
+As we defined a watchpoint on the 'Solid' participant at the flap tip (see `precice-config.xml`), we can plot it with gnuplot using the script `plot-displacement.sh.` You need to specify the directory of the selected solid participant as a command line argument, so that the script can pick-up the desired watchpoint file, e.g. `plot-displacement.sh solid-gismo`. The resulting graph shows the x displacement of the flap tip. You can modify the script to plot the force instead.
+
+![Flap watchpoint](images/tutorials-perpendicular-flap-stress-displacement-watchpoint.png)
+
+TODO: add picture
+
+{% disclaimer %}
+This offering is not approved or endorsed by OpenCFD Limited, producer and distributor of the OpenFOAM software via www.openfoam.com, and owner of the OPENFOAM®  and OpenCFD®  trade marks.
+{% enddisclaimer %}
