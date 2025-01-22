@@ -27,7 +27,7 @@ Fluid participant:
 
 Solid participant:
 
-* G+Smo. For more information, have a look at the [G+Smo adapter documentation](https://precice.org/adapter-gismo-overview.html).
+* G+Smo (perpendicular-flap-vertex-gismo). For more information, have a look at the [G+Smo adapter documentation](https://precice.org/adapter-gismo-overview.html).
 
 ## Running the Simulation
 
