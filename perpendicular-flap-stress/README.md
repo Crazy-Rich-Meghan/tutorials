@@ -55,7 +55,6 @@ As we defined a watchpoint on the 'Solid' participant at the flap tip (see `prec
 
 ![Flap watchpoint](images/tutorials-perpendicular-flap-stress-displacement-watchpoint.png)
 
-TODO: add picture
 
 {% disclaimer %}
 This offering is not approved or endorsed by OpenCFD Limited, producer and distributor of the OpenFOAM software via www.openfoam.com, and owner of the OPENFOAM®  and OpenCFD®  trade marks.
