@@ -49,7 +49,7 @@ cd solid-gismo
 
 On the OpenFOAM side, you can open the `.foam` file with ParaView, or create VTK files with `foamToVTK`.
 
-TODO: how can we visualize G+Smo results?
+On the G+Smo side, you can open the `.pvd` file located in the `solid-gismo/output` folder using ParaView. If you prefer not to plot the simulation, simply edit the `run.sh` script and remove the  `--plot` option.
 
 As we defined a watchpoint on the 'Solid' participant at the flap tip (see `precice-config.xml`), we can plot it with gnuplot using the script `plot-displacement.sh.` You need to specify the directory of the selected solid participant as a command line argument, so that the script can pick-up the desired watchpoint file, e.g. `plot-displacement.sh solid-gismo`. The resulting graph shows the x displacement of the flap tip. You can modify the script to plot the force instead.
 
