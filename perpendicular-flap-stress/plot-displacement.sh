@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 if [ "${1:-}" = "" ]; then
-    echo "No target directory specified. Please specify the directory of the solid participant containing the watchpoint, e.g. ./plot-displacement.sh solid-fenics."
+    echo "No target directory specified. Please specify the directory of the solid participant containing the watchpoint, e.g. ./plot-displacement.sh solid-gismo."
     exit 1
 fi
 
