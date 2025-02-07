@@ -29,7 +29,7 @@ Solid participant:
 
 * G+Smo (perpendicular-flap-vertex-gismo). For more information, have a look at the [G+Smo adapter documentation](https://precice.org/adapter-gismo-overview.html).
 
-## Running the Simulation
+## Running the simulation
 
 Open two separate terminals and start the desired fluid and solid participant by calling the respective run script `run.sh` located in the participant directory. For example:
 
