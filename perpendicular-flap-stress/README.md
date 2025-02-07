@@ -31,7 +31,7 @@ Solid participant:
 
 ## Running the simulation
 
-Open two separate terminals and start the desired fluid and solid participant by calling the respective run script `run.sh` located in the participant directory. For example:
+Open two separate terminals and start the desired fluid and solid participants by calling the respective run scripts `run.sh` located in the participants' directories. For example:
 
 ```bash
 cd fluid-openfoam
