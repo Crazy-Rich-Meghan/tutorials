@@ -55,6 +55,12 @@ As we defined a watchpoint on the 'Solid' participant at the flap tip (see `prec
 
 ![Flap watchpoint](images/tutorials-perpendicular-flap-stress-displacement-watchpoint.png)
 
+The G+Smo solver includes both linear and nonlinear versions of the Newmark time integrator for time-dependent structural problems.
+
+The linear version iterates using a constant stiffness matrix $K$.
+The nonlinear version iterates using an updated Jacobian matrix $J$ to account for material or geometric nonlinearity.
+
+By default, the solver runs in linear mode. To switch to nonlinear mode, simply add `--nonlinear` to `run.sh`.
 
 {% disclaimer %}
 This offering is not approved or endorsed by OpenCFD Limited, producer and distributor of the OpenFOAM software via www.openfoam.com, and owner of the OPENFOAM®  and OpenCFD®  trade marks.
