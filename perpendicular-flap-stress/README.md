@@ -27,7 +27,7 @@ Fluid participant:
 
 Solid participant:
 
-* G+Smo (perpendicular-flap-vertex-gismo). For more information, have a look at the [G+Smo adapter documentation](https://precice.org/adapter-gismo-overview.html).
+* G+Smo (perpendicular-flap-vertex-gismo). This solver includes both linear and nonlinear versions of the Newmark time integrator for time-dependent structural problems. The linear version iterates using a constant stiffness matrix. The nonlinear version iterates using an updated Jacobian matrix to account for material or geometric nonlinearity. By default, the solver runs in linear mode. To switch to nonlinear mode, add `--nonlinear` as option in `run.sh`. For more information, have a look at the [G+Smo adapter documentation](https://precice.org/adapter-gismo-overview.html).
 
 ## Running the simulation
 
@@ -54,13 +54,6 @@ On the G+Smo side, you can open the `.pvd` file located in the `solid-gismo/outp
 As we defined a watchpoint on the 'Solid' participant at the flap tip (see `precice-config.xml`), we can plot it with gnuplot using the script `plot-displacement.sh.` You need to specify the directory of the selected solid participant as a command line argument, so that the script can pick-up the desired watchpoint file, e.g. `plot-displacement.sh solid-gismo`. The resulting graph shows the x displacement of the flap tip. You can modify the script to plot the force instead.
 
 ![Flap watchpoint](images/tutorials-perpendicular-flap-stress-displacement-watchpoint.png)
-
-The G+Smo solver includes both linear and nonlinear versions of the Newmark time integrator for time-dependent structural problems.
-
-The linear version iterates using a constant stiffness matrix $K$.
-The nonlinear version iterates using an updated Jacobian matrix $J$ to account for material or geometric nonlinearity.
-
-By default, the solver runs in linear mode. To switch to nonlinear mode, simply add `--nonlinear` to `run.sh`.
 
 {% disclaimer %}
 This offering is not approved or endorsed by OpenCFD Limited, producer and distributor of the OpenFOAM software via www.openfoam.com, and owner of the OPENFOAM®  and OpenCFD®  trade marks.
