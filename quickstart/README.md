@@ -40,10 +40,10 @@ To get a feeling what preCICE does, watch a [short presentation](https://www.you
     ```bash
     # Add the signing key, add the repository, update (check this):
     wget -q -O - https://dl.openfoam.com/add-debian-repo.sh | sudo bash
-    # Install OpenFOAM v2406:
-    sudo apt install openfoam2406-dev
+    # Install OpenFOAM v2412:
+    sudo apt install openfoam2412-dev
     # Enable OpenFOAM by default in your system and apply now:
-    echo "source /usr/lib/openfoam/openfoam2406/etc/bashrc" >> ~/.bashrc
+    echo "source /usr/lib/openfoam/openfoam2412/etc/bashrc" >> ~/.bashrc
     source ~/.bashrc
     ```
 
@@ -149,6 +149,6 @@ To become a preCICE pro:
 
 Are you just starting with simulation software on Linux? Note that much of the complexity for partitioned simulations comes from working with multiple software packages and some new tools. These resources may help your first steps:
 
-- E-book [Research Software Engineering with Python](https://merely-useful.tech/py-rse/).
+- E-book [Research Software Engineering with Python](http://third-bit.com/py-rse/).
 - Material of the course [Simulation Software Engineering](https://simulation-software-engineering.github.io/) (University of Stuttgart).
 - Material of the course [The Missing Semester of Your CS Education](https://missing.csail.mit.edu/) (MIT).
