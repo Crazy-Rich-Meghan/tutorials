@@ -201,13 +201,6 @@ clean_gismo(){
         set -e -u
         cd "$1"
         echo "- Cleaning up G+Smo case in $(pwd)"
-        for ext in pvd vts vtp log txt; do
-            for file in **/*."$ext"; do
-                # Check if the file exists
-                [ -f "$file" ] && rm -f "$file"
-            done
-        done
-        rm -fv pointData.csv
         rm -rfv ./output/
         clean_precice_logs .
         clean_case_logs .
