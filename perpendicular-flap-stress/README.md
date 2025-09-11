@@ -29,6 +29,8 @@ Solid participant:
 
 * G+Smo (perpendicular-flap-vertex-gismo). This solver includes both linear and nonlinear versions of the Newmark time integrator for time-dependent structural problems. The linear version iterates using a constant stiffness matrix. The nonlinear version iterates using an updated Jacobian matrix to account for material or geometric nonlinearity. By default, the solver runs in linear mode. To switch to nonlinear mode, add `--nonlinear` as option in `run.sh`. For more information, have a look at the [G+Smo adapter documentation](https://precice.org/adapter-gismo-overview.html).
 
+* G+Smo (perpendicular-flap-multipatch-vertex-gismo). This variant uses a multi-patch NURBS model of the flap, where several patches meet at the free-tip vertex. The time integration options are the same as above (linear by default, enable nonlinear with `--nonlinear`). To run this setup, use the script in `perpendicular-flap-stress/solid-gismo-multipatch/run.sh`.
+
 ## Running the simulation
 
 Open two separate terminals and start the desired fluid and solid participants by calling the respective run scripts `run.sh` located in the participants' directories. For example:
